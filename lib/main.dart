@@ -188,10 +188,7 @@ class Dashboard extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductList()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductList()));
                       },
                     ),
                   )

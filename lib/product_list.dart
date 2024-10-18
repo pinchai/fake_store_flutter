@@ -77,12 +77,7 @@ class ProductList extends StatelessWidget {
                           Expanded(
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailScreen(
-                                        data: product[index]['id']),
-                                  ),
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(data: product[index]['id']),),
                                 );
                               },
                               child: Image.network(
