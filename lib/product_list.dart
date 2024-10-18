@@ -1,12 +1,28 @@
 import 'dart:convert';
 
+import 'package:fake_store/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'detail.dart';
 
-class ProductList extends StatelessWidget {
+class ProductList extends StatefulWidget {
   const ProductList({super.key});
+
+  @override
+  State<ProductList> createState() => _ProductListState();
+}
+
+class _ProductListState extends State<ProductList> {
+  dynamic cartCount = 10;
+  Future<List>? _myFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load data once
+    _myFuture = _getProduct();
+  }
 
   Future<List> _getProduct() async {
     var url = Uri.parse("https://fakestoreapi.com/products");
@@ -20,15 +36,27 @@ class ProductList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Product List"),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(Icons.shopping_cart),
-          )
+            padding: EdgeInsets.only(right: 0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => CartScreen(user_id: 1)));
+              },
+              icon: Icon(Icons.shopping_cart),
+            ),
+          ),
+          Padding(
+              padding: EdgeInsets.only(right: 10, left: 10),
+              child: Text(
+                "${cartCount!}",
+                style: TextStyle(color: Colors.red),
+              ))
         ],
       ),
       body: FutureBuilder<List>(
-          future: _getProduct(),
+          future: _myFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -71,13 +99,16 @@ class ProductList extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           Expanded(
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(data: product[index]['id']),),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailScreen(
+                                        data: product[index]['id']),
+                                  ),
                                 );
                               },
                               child: Image.network(
@@ -124,7 +155,9 @@ class ProductList extends StatelessWidget {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    print("Add to Cart");
+                                    setState(() {
+                                      cartCount++;
+                                    });
                                   },
                                   icon: const Icon(
                                     Icons.add_shopping_cart,
