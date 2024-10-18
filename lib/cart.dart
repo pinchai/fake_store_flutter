@@ -1,4 +1,3 @@
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -35,8 +34,7 @@ class CartScreen extends StatelessWidget {
                       strokeWidth: 5,
                     ),
                   ); // Loading spinner
-                }
-                else if (snapshot.hasError) {
+                } else if (snapshot.hasError) {
                   return Center(
                       child:
                           Text('Error: ${snapshot.error}')); // Error handling
@@ -54,14 +52,33 @@ class CartScreen extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: 10,
                             itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                leading: Image.network("https://picsum.photos/id/3${index}/200/300"),
-                                title: Text("Coca Cola"),
-                                subtitle: Text("Quanty: 10 x 0.50\$ = 5.0\$"),
-                                trailing: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.remove_circle),
-                                  color: Colors.redAccent,
+                              return Container(
+                                width: double.infinity,
+                                height: 100,
+                                child: ListTile(
+                                  leading: Image.network(
+                                    "https://picsum.photos/id/3${index}/200/300",
+                                    fit: BoxFit.contain,
+                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      }
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress.expectedTotalBytes != null
+                                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  title: Text("Coca Cola"),
+                                  subtitle: Text("Quanty: 10 x 0.50\$ = 5.0\$"),
+                                  trailing: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.delete_forever_outlined, size: 20,),
+                                    color: Colors.redAccent,
+                                  ),
                                 ),
                               );
                             },
@@ -73,16 +90,40 @@ class CartScreen extends StatelessWidget {
                             child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              "Total: 100\$",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.redAccent,
-                                  fontSize: 20),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "Total Amount: 100.0 \$",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.redAccent,
+                                      fontSize: 20),
+                                  textAlign: TextAlign.start,
+                                ),
+                                Text(
+                                  "Total Item: 10",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey,
+                                      fontSize: 18),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
                             ),
                             ElevatedButton(
                               onPressed: () {},
-                              child: Text("Checkout!"),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  shape: const BeveledRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ))),
+                              child: const Text(
+                                "Checkout",
+                                style: TextStyle(fontSize: 18),
+                              ),
                             )
                           ],
                         ))

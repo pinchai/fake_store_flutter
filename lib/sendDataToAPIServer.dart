@@ -10,17 +10,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SendDataScreen(),
+      home: CreateProductScreen(),
     );
   }
 }
 
-class SendDataScreen extends StatefulWidget {
+class CreateProductScreen extends StatefulWidget {
   @override
-  _SendDataScreenState createState() => _SendDataScreenState();
+  _CreateProductScreenState createState() => _CreateProductScreenState();
 }
 
-class _SendDataScreenState extends State<SendDataScreen> {
+class _CreateProductScreenState extends State<CreateProductScreen> {
   final TextEditingController _controller = TextEditingController();
 
   Future<void> sendData() async {
@@ -55,26 +55,28 @@ class _SendDataScreenState extends State<SendDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Send Data to API"),
+        title: Text("Create New Product"),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextFormField(
-              decoration: InputDecoration(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.lock),
                 suffixIcon: Icon(Icons.visibility)
               ),
             ),
             TextField(
+              keyboardType: TextInputType.text,
               controller: _controller,
-              decoration: InputDecoration(labelText: 'Enter text'),
+              decoration: const InputDecoration(labelText: 'Enter text'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: sendData,
-              child: Text("Send Data"),
+              child: Text("Seve"),
             ),
           ],
         ),

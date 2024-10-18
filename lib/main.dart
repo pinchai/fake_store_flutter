@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:badges/badges.dart' as badges;
 
 import 'detail.dart';
 import 'product_list.dart';
@@ -36,12 +37,24 @@ class Dashboard extends StatelessWidget {
               child: IconButton(onPressed:(){}, icon: Icon(Icons.point_of_sale_outlined)),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 20, left: 10),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.notifications),
+              padding: EdgeInsets.only(left: 0, right: 10, top: 10),
+              child: badges.Badge(
+                badgeContent: Text(
+                  "50",
+                  style: TextStyle(fontSize: 10, color: Colors.yellow),
+                ),
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.purple,
+                  padding: EdgeInsets.all(5),
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.white, width: 1),
+                  elevation: 10,
+                ),
+                onTap: () {
+                },
+                child: Icon(Icons.notifications),
               ),
-            )
+            ),
           ],
         ),
         drawer: Drawer(

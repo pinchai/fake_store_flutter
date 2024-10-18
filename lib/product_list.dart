@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:fake_store/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:badges/badges.dart' as badges;
 
 import 'detail.dart';
+import 'sendDataToAPIServer.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -38,21 +40,52 @@ class _ProductListState extends State<ProductList> {
         title: const Text("Product List"),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 0),
+            padding: EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => CartScreen(user_id: 1)));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateProductScreen()
+                  ),
+                );
               },
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.add_box),
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(right: 10, left: 10),
-              child: Text(
-                "${cartCount!}",
-                style: TextStyle(color: Colors.red),
-              ))
+            padding: const EdgeInsets.only(top: 16.0, right: 20, left: 20),
+            child: InkWell(
+              child: badges.Badge(
+                badgeContent: Text(
+                  "${cartCount!}",
+                  style: TextStyle(fontSize: 10, color: Colors.yellow),
+                ),
+                badgeAnimation: const badges.BadgeAnimation.scale(
+                  // animationDuration: Duration(seconds: 1),
+                  // colorChangeAnimationDuration: Duration(seconds: 1),
+                  loopAnimation: false,
+                  curve: Curves.fastOutSlowIn,
+                  colorChangeAnimationCurve: Curves.easeInCubic,
+                ),
+                badgeStyle: badges.BadgeStyle(
+                  shape: badges.BadgeShape.square,
+                  badgeColor: Colors.purple,
+                  padding: EdgeInsets.all(3),
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.white, width: 1),
+                  elevation: 0,
+                ),
+                child: Icon(Icons.shopping_cart),
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CartScreen(user_id: 1)));
+              },
+            ),
+          ),
         ],
       ),
       body: FutureBuilder<List>(
@@ -113,7 +146,26 @@ class _ProductListState extends State<ProductList> {
                               },
                               child: Image.network(
                                 product[index]['image'],
-                                fit: BoxFit.contain,
+                                // 'https://flutter.github.io/assets-for-api-docs/assets/widgets/falcon.jpg',
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
