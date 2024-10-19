@@ -32,7 +32,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
 
     // Prepare the body (JSON data)
     Map<String, dynamic> body = {
-      'text': inputText,  // key:value pair as per API requirement
+      'text': inputText, // key:value pair as per API requirement
     };
 
     // Make a POST request
@@ -64,16 +64,40 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                suffixIcon: Icon(Icons.visibility)
-              ),
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: Icon(Icons.visibility)),
             ),
-            TextField(
-              keyboardType: TextInputType.text,
-              controller: _controller,
-              decoration: const InputDecoration(labelText: 'Enter text'),
+            Stack(
+              children: [
+                Container(
+                  height: 200,
+                  color: Colors.yellow,
+                ),
+                Container(
+                  height: 100,
+                  color: Colors.grey,
+                ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Container(
+                    height: 70,
+                    width: 100,
+                    color: Colors.redAccent,
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Container(
+                    height: 70,
+                    width: 100,
+                    color: Colors.redAccent,
+                  ),
+                )
+              ],
             ),
-            SizedBox(height: 20),
+            Spacer(),
             ElevatedButton(
               onPressed: sendData,
               child: Text("Seve"),
