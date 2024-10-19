@@ -17,7 +17,7 @@ class DetailScreen extends StatelessWidget {
   }
 
   Future<Map> _getProductDetail() async {
-    var url = Uri.parse("https://fakestoreapi.com/products/${this.data}");
+    var url = Uri.parse("http://127.0.0.1:5000/products");
     var respone = await http.get(url);
     final data = jsonDecode(respone.body);
     return data;
