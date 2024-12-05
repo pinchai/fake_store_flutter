@@ -27,8 +27,8 @@ class _ProductListState extends State<ProductList> {
   }
 
   Future<List> _getProduct() async {
-    // var url = Uri.parse("https://fakestoreapi.com/products");
-    var url = Uri.parse("http://172.20.10.2:5050/products");
+    var url = Uri.parse("https://fakestoreapi.com/products");
+    // var url = Uri.parse("http://192.168.8.254:5050/products");
     var respone = await http.get(url);
     print(respone);
     final data = jsonDecode(respone.body);

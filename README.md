@@ -1,17 +1,46 @@
-# fake_store
+##Route to another screen with parameter in Flutter
+```
+Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => CartScreen(user_id: 1)));
+```
 
-A new Flutter project.
+##Fetch data from API in Flutter
+```
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+    @override
+    void initState() {
+        super.initState();
+        // Load data once
+        _myFuture = _getProduct();
+    }
 
-## Getting Started
+Future<List> _getProduct() async {
+    var url = Uri.parse("https://fakestoreapi.com/products");
+    // var url = Uri.parse("http://192.168.8.254:5050/products");
+    var respone = await http.get(url);
+    print(respone);
+    final data = jsonDecode(respone.body);
+    return data;
+}
+```
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# fake_store_flutter
+##Pass data from one screen to another in Flutter
+````
+    FutureBuilder<String>(
+        future: fetchData(),
+        builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
+                return Text('Result: ${snapshot.data}');
+            } else {
+                return Text('No data found');
+            }
+        },
+    );
+````

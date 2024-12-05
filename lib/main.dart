@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:badges/badges.dart' as badges;
 
 import 'detail.dart';
@@ -190,6 +187,78 @@ class Dashboard extends StatelessWidget {
                               ),
                               Text(
                                 "Product List",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductList()));
+                      },
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      child: const Card(
+                        child: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.book_online,
+                                size: 70,
+                                color: Colors.grey,
+                              ),
+                              Text(
+                                "SALE REPORT",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductList()),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      child: const Card(
+                        child: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.shopping_cart,
+                                size: 70,
+                                color: Colors.grey,
+                              ),
+                              Text(
+                                "PURCHASE REPORT",
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
